@@ -1,30 +1,31 @@
-import urllib
-import urllib2
-url = "http://dailymed.nlm.nih.gov/dailymed/services/v2/spls"
-post = urllib.urlencode({})
+from urllib2 import urlopen
+from json import load
 
-request = urllib2.Request(url, post)
-socket = urllib2.urlopen(request)
+apiUrl = "http://dailymed.nlm.nih.gov/dailymed/services/v2/spls"
+apiParam = "dea_schedule_code/C48675"
+outputFormat = "?format=json"
 
-hdrs = socket.headers
-source = socket.read()
-socket.close()
+response = urlopen(apiUrl + apiParam + outputFormat)
 
-print "---- Headers -----"
-print hdrs
-print "---- Source HTML -----"
-print source
-print "---- END -----"
+json_obj = load(response)
 
-value = 0
-for line in source.splitlines():
-    if not line.strip():  continue
-    if line.startswith("value="):
-        try:
-            value = line.split("=")
-        except IndexError:
-            pass
-    if value > 0:
-        break
+#Load the Result from the JSON response
+print "---------"
+print    Result
+print "---------"
+#for objectCollection in json_obj['Results']:
+#	for drug_nameAttribute, drug_nameValue in objectCollection.iteritems():
+#		print drug_nameAttribute, ": ", drug_nameValue
 
-open("some.html", "w").write("value is: %d" % value)
+#value = 0
+#for line in source.splitlines():
+#    if not line.strip():  continue
+#    if line.startswith("value="):
+#        try:
+#            value = line.split("=")
+#        except IndexError:
+#            pass
+#    if value > 0:
+#        break
+#
+#open("some.html", "w").write("value is: %d" % value)
