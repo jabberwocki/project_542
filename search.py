@@ -8,8 +8,10 @@ print apiUrl
 response = urlopen(apiUrl)
 json_obj = load(response)
 
-for drug in json_obj["data"]:
-	print drug["data"]
+print json_obj
+
+#for drug in json_obj["data"]:
+#	print drug["data"]
 
 
 
